@@ -42,7 +42,7 @@ export default function TaskCard({ task }) {
     return (
         <div
             className={`card flex flex-col md:flex-row items-center md:items-center text-center md:text-left gap-4 md:gap-5 hover:shadow-lg transition-all duration-200
-          ${task.completed ? "opacity-75 bg-gray-50" : "bg-white"}
+          ${task.completed ? "opacity-75 bg-gray-50 dark:bg-gray-700" : "bg-white dark:bg-gray-800"}
           ${expired ? "border-2 border-red-500" : "border border-transparent"}
         `}
         >
@@ -56,7 +56,7 @@ export default function TaskCard({ task }) {
                 className={`group shrink-0 w-9 h-9 flex items-center justify-center rounded-lg border-[2.5px] transition-all ${
                     task.completed
                         ? "bg-green-500 border-green-500 text-white hover:bg-gray-200 hover:border-gray-400 hover:text-gray-600 shadow-sm"
-                        : "border-gray-300 bg-white text-transparent hover:border-green-500 hover:text-green-500"
+                        : "border-gray-300 bg-white dark:bg-gray-700 dark:border-gray-500 text-transparent hover:border-green-500 hover:text-green-500"
                 }`}
             >
                 {task.completed ? (
@@ -113,14 +113,14 @@ export default function TaskCard({ task }) {
                     className={`text-xl font-bold truncate w-full ${
                         task.completed
                             ? "line-through text-gray-400"
-                            : "text-gray-800"
+                            : "text-gray-800 dark:text-white"
                     }`}
                 >
                     {task.title}
                 </h3>
 
                 {task.description && (
-                    <p className="text-gray-600 text-sm mt-1 line-clamp-2 w-full">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 line-clamp-2 w-full">
                         {task.description}
                     </p>
                 )}
