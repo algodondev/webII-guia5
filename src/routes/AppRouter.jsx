@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuthStore } from "../store/authStore";
+import { useUIStore } from "../store/uiStore";
 
 import Layout from "../components/layout/Layout";
 import Login from "../pages/auth/Login";
@@ -12,11 +13,15 @@ import LoadingSpinner from "../components/common/LoadingSpinner";
 
 export default function AppRouter() {
     const { initializeAuth, loading } = useAuthStore();
+    const { colorScheme } = useUIStore();
 
-    // Verificar cambios en la autenticacion
     useEffect(() => {
         initializeAuth();
     }, [initializeAuth]);
+
+    useEffect(() => {
+        document.documentElement.classList.toggle("dark", colorScheme === "dark");
+    }, [colorScheme]);
 
     // Loader
     if (loading) {
