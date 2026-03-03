@@ -1,0 +1,64 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../store/authStore";
+import { logoutUser } from "../../services/authService";
+import { useUIStore } from "../../store/uiStore";
+
+export default function Navbar() {
+    const { user, clearUser } = useAuthStore();
+    const { colorScheme, switchScheme } = useUIStore();
+    const nav = useNavigate();
+
+    const signOut = async () => {
+        const res = await logoutUser();
+        if (res.success) {
+            clearUser();
+            nav("/login");
+        }
+    };
+
+    const isDark = colorScheme === "dark";
+
+    return (
+        <nav
+            className={`shadow-md transition-colors duration-200 ${
+                isDark ? "bg-gray-800 text-white" : "bg-white text-gray-800"
+            }`}
+        >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col sm:flex-row justify-between items-center h-auto sm:h-16 py-4 sm:py-0 gap-4 sm:gap-0">
+                    <div className="flex items-center">
+                        <Link to="/dashboard" className="text-2xl font-bold text-blue-600 text-center">
+                            Task Manager Pro
+                        </Link>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                        <button onClick={switchScheme} className="btn-secondary">
+                            {isDark ? (
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                                    <path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
+                                    <path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" />
+                                    <path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" />
+                                    <path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
+                                    <path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
+                                    <path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" />
+                                    <path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" />
+                                    <path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
+                                    <path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
+                                </svg>
+                            ) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                                    <path d="M12 1.992a10 10 0 1 0 9.236 13.838c.341 -.82 -.476 -1.644 -1.298 -1.31a6.5 6.5 0 0 1 -6.864 -10.787l.077 -.08c.551 -.63 .113 -1.653 -.758 -1.653h-.266l-.068 -.006l-.06 -.002z" />
+                                </svg>
+                            )}
+                        </button>
+
+                        <button onClick={signOut} className="btn-secondary">
+                            Cerrar sesión
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    );
+}
